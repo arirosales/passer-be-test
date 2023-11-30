@@ -37,9 +37,10 @@ const updateTransaction = async (req, res, next) => {
     }
 }
 const getTransactionByUser = async (req, res, next) => {
-    const { pk_user } = req.params
+    const { pk_user, page } = req.params
+ 
     try {
-        let transaction = await transactions.getTransactionByUser(pk_user)
+        let transaction = await transactions.getTransactionByUser(pk_user, page)
         res.status(200).send(transaction)
         next()
     } catch (e) {

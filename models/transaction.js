@@ -6,7 +6,7 @@ const { postgresql } = require('../databases/postgresql')
  *  * @param {number} fk_user Transaction id_user
  * @param {string} description Transaction description
  * @param {number} amount Transaction amount
- * @returns {{1, 123, 'sinpe', 25.5}}
+ * @returns {{1, 123, 'sinpe', 25.5}} new transaction
  */
 const createTransaction = (pk_transaction, fk_user, description, amount) => {
     try {
@@ -28,22 +28,32 @@ const getTransaction = (pk_transaction) => {
 }
 
 /**
- * Get an Transaction by user
- * @param {number} fk_user Transaction id foreign key
- *  @returns {{1, 123, 'sinpe', 25.5},{1, 123, 'deposito', 16.9}, {1, 123, 'efectivo', 100.34}}
+ * Get transactions by user with pagination
+ * @param {number} fk_user  Transaction id foreign key
+ * @param {number} page - Page number for pagination
+ * @returns {{transactions: [{number, number, string, number}], metadata: {number, number}}}
  */
-const getTransactionByUser = (fk_user) => {
-    let transaction = postgresql.public.many(`select pk_transaction, fk_user, description, amount from transaction where fk_user = '${fk_user}'`);
-    return transaction
+const getTransactionByUser = (fk_user, page) => {
+    const limit= 5;
+    const offset = (parseInt(page)-1)*limit
+    const transactions = postgresql.public.many(`
+    SELECT pk_transaction, fk_user, description, amount 
+        FROM transaction 
+        WHERE fk_user = '${fk_user}' 
+        ORDER BY pk_transaction 
+        LIMIT ${limit} OFFSET ${offset}
+        `);
+    const count = postgresql.public.one(`SELECT COUNT(*) FROM transaction where fk_user= '${fk_user}'`);
+    return { transactions, metadata: { count,  page: parseInt(page) } };
 }
 
 /**
- * Update a Transaction
+ * Update a transaction
  * @param {number} pk_transaction Transaction id
  *  * @param {number} fk_user Transaction id_user
  * @param {string} description Transaction description
  * @param {number} amount Transaction amount
- * @returns {{1, 123, 'sinpe', 25.5}}
+ * @returns {{1, 123, 'deposito', 25.5}} update transaction
  */
 const updateTransaction = (pk_transaction, fk_user, description, amount) => {
     try {

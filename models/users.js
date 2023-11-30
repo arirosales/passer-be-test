@@ -5,7 +5,7 @@ const { postgresql } = require('../databases/postgresql')
  * @param {number} pk_user User primary key
  * @param {string} name User name
  * @param {boolean} status User status
- * @returns {{pk_user: 1, name: "Juan", status:true}}
+ * @returns {{pk_user: 1, name: "Juan", status:true}} new user
  */
 const createUser = (pk_user, name, status) => {
     try {
@@ -21,7 +21,7 @@ const createUser = (pk_user, name, status) => {
  * @param {number} pk_user User primary key
  * @param {string} name User name
  * @param {boolean} status User status
- * @returns {{pk_user: 1, name: "Juan", status:true}}
+ * @returns {{pk_user: 1, name: "Juan", status:true}} update user
  */
 const updateUser = (pk_user, name, status) => {
     try {
@@ -43,6 +43,15 @@ const getUser = (pk_user) => {
 }
 
 /**
+ * Get users
+ * @returns {pk_user: 1, name: "Juan", status:false}  deleted users
+ */
+const getDeletedUsers = () => {
+    let user = postgresql.public.many(`select pk_user, name, status from users where status= false`);
+    return user
+}
+
+/**c
  * Delete an specific user
  * @param {number} pk_user User primary key
  * @returns {pk_user: 1} User primary key
@@ -61,5 +70,6 @@ module.exports = {
     createUser,
     getUser,
     updateUser,
-    deleteUser
+    deleteUser,
+    getDeletedUsers
 }

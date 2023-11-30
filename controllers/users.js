@@ -11,7 +11,16 @@ const getUser = async (req, res, next) => {
         res.sendStatus(500) && next(e)
     }
 }
-
+const getDeletedUsers = async (req, res, next) => {
+    try {
+        let user = await users.getDeletedUsers()
+        res.status(200).send(user)
+        next()
+    } catch (e) {
+        console.log(e.message)
+        res.sendStatus(500) && next(e)
+    }
+}
 const createUser = async (req, res, next) => {
     const { pk_user, name, status } = req.body
     try {
@@ -55,5 +64,6 @@ module.exports = {
     getUser,
     createUser,
     updateUser,
-    deleteUser
+    deleteUser, 
+    getDeletedUsers
 }

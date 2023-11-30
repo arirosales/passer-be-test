@@ -2,12 +2,12 @@ const transactionModel = require('../models/transaction')
 
 
 /**
- * Create a Transaction
+ * Create a transaction
  * @param {number} pk_transaction Transaction id
  *  * @param {number} fk_user Transaction id_user
  * @param {string} description Transaction description
  * @param {float} amount Transaction amount
- * @returns {{1, 123, 'sinpe', 25.5}}
+ * @returns {{1, 123, 'sinpe', 25.5}} new transaction
  */
 const createTransaction = async ( pk_transaction, fk_user, description, amount) => {
     try {
@@ -41,20 +41,20 @@ const getTransaction = async (pk_transaction) => {
  * @param {float} amount Transaction amount
  * @returns {{1, 123, 'sinpe', 25.5}}
  */
-const getTransactionByUser = async (fk_user) => {
+const getTransactionByUser = async (fk_user,page) => {
     try {
-        return await transactionModel.getTransactionByUser(fk_user)
+        return await transactionModel.getTransactionByUser(fk_user, page)
     } catch (e) {
         throw new Error(e.message)
     }
 }
 /**
- * Update a Transaction
+ * Update a transaction
  * @param {number} pk_transaction Transaction id
  *  * @param {number} fk_user Transaction id_user
  * @param {string} description Transaction description
  * @param {float} amount Transaction amount
- * @returns {{1, 123, 'sinpe', 25.5}}
+ * @returns {{1, 123, 'deposito', 25.5}} update transaction
  */
 const updateTransaction = async ( pk_transaction,fk_user, description, amount) => {
     try {

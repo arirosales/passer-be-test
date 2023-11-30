@@ -18,7 +18,12 @@ postgresql.public.none(`create table transaction(pk_transaction integer PRIMARY 
 postgresql.public.none(`insert into transaction values (1, 123, 'sinpe', 25.5);`);
 postgresql.public.none(`insert into transaction values (2, 123, 'deposito', 16.9);`);
 postgresql.public.none(`insert into transaction values (3, 123, 'efectivo', 100.34);`);
-postgresql.public.none(`insert into transaction values (4, 456, 'sinpe', 234.56);`);
+postgresql.public.none(`insert into transaction values (4, 123, 'sinpe', 16.9);`);
+postgresql.public.none(`insert into transaction values (5, 123, 'efectivo', 56.8);`);
+postgresql.public.none(`insert into transaction values (6, 123, 'sinpe', 12.7);`);
+postgresql.public.none(`insert into transaction values (7, 123, 'deposito', 86.8);`);
+postgresql.public.none(`insert into transaction values (8, 123, 'sinpe', 888.6);`);
+postgresql.public.none(`insert into transaction values (9, 456, 'sinpe', 234.56);`);
 
 module.exports = {
     postgresql

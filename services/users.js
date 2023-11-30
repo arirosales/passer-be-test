@@ -12,13 +12,24 @@ const getUser = async (pk_user) => {
         throw new Error(e.message)
     }
 }
+/**
+ * Get deleted users
+ * @returns {{pk_user: 123, name: "Juan", status: false}}  all users deleted
+ */
+const getDeletedUsers = async () => {
+    try {
+        return await usersModel.getDeletedUsers()
+    } catch (e) {
+        throw new Error(e.message)
+    }
+}
 
 /**
  * Create an user
  * @param {number} pk_user User id
  * @param {string} name User name
  * @param {boolean} status User status
- * @returns {{pk_user: 123, name: "Juan", status:true}}
+ * @returns {{pk_user: 123, name: "Juan", status:true}} new user
  */
 const createUser = async (pk_user, name, status) => {
     try {
@@ -33,7 +44,7 @@ const createUser = async (pk_user, name, status) => {
  * @param {number} pk_user User id
  * @param {string} name User name
  * @param {boolean} status User status
- * @returns {{pk_user: 456, name: "Ariany", status:true}}
+ * @returns {{pk_user: 123, name: "Ariany", status:true}}
  */
 const updateUser = async (pk_user, name, status) => {
     try {
@@ -59,11 +70,10 @@ const deleteUser = async (pk_user) => {
 }
 
 
-
-
 module.exports = {
     getUser,
     createUser,
     updateUser,
-    deleteUser
+    deleteUser,
+    getDeletedUsers
 }
