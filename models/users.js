@@ -10,7 +10,7 @@ const { postgresql } = require('../databases/postgresql')
 const createUser = (pk_user, name, status) => {
     try {
         const user = postgresql.public.none(`insert into users (pk_user, name, status) values ('${pk_user}','${name}','${status}');`);
-        return user;
+        return {pk_user, name, status};
     } catch (e) {
         throw new Error(e);
     }
@@ -26,7 +26,7 @@ const createUser = (pk_user, name, status) => {
 const updateUser = (pk_user, name, status) => {
     try {
         const user = postgresql.public.none(`update users set name='${name}', status='${status}' where pk_user= '${pk_user}'; `);
-        return user;
+        return {pk_user, name, status};
 
     } catch (e) {
         throw new Error(e);
@@ -50,7 +50,7 @@ const getUser = (pk_user) => {
 const deleteUser = (pk_user) => {
     try {
         const user = postgresql.public.none(`update users set status=false where pk_user= '${pk_user}'; `);
-        return user;
+        return { pk_user };;
 
     } catch (e) {
         throw new Error(e);
