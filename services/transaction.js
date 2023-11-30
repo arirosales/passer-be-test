@@ -18,7 +18,7 @@ const createTransaction = async ( pk_transaction, fk_user, description, amount) 
 }
 
 /**
- * get a especific user Transaction
+ * get a especific Transaction
  * @param {number} pk_transaction Transaction id
  *  * @param {number} fk_user Transaction id_user
  * @param {string} description Transaction description
@@ -33,6 +33,21 @@ const getTransaction = async (pk_transaction) => {
     }
 }
 
+/**
+ * get a especific  Transaction by user
+ * @param {number} pk_transaction Transaction id
+ *  * @param {number} fk_user Transaction id_user
+ * @param {string} description Transaction description
+ * @param {float} amount Transaction amount
+ * @returns {{1, 123, 'sinpe', 25.5}}
+ */
+const getTransactionByUser = async (fk_user) => {
+    try {
+        return await transactionModel.getTransactionByUser(fk_user)
+    } catch (e) {
+        throw new Error(e.message)
+    }
+}
 /**
  * Update a Transaction
  * @param {number} pk_transaction Transaction id
@@ -53,5 +68,6 @@ const updateTransaction = async ( pk_transaction,fk_user, description, amount) =
 module.exports = {
     createTransaction,
     getTransaction,
-    updateTransaction
+    updateTransaction,
+    getTransactionByUser
 }

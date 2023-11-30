@@ -28,6 +28,16 @@ const getTransaction = (pk_transaction) => {
 }
 
 /**
+ * Get an Transaction by user
+ * @param {number} fk_user Transaction id foreign key
+ *  @returns {{1, 123, 'sinpe', 25.5},{1, 123, 'deposito', 16.9}, {1, 123, 'efectivo', 100.34}}
+ */
+const getTransactionByUser = (fk_user) => {
+    let transaction = postgresql.public.many(`select pk_transaction, fk_user, description, amount from transaction where fk_user = '${fk_user}'`);
+    return transaction
+}
+
+/**
  * Update a Transaction
  * @param {number} pk_transaction Transaction id
  *  * @param {number} fk_user Transaction id_user
@@ -47,5 +57,6 @@ const updateTransaction = (pk_transaction, fk_user, description, amount) => {
 module.exports = {
     createTransaction,
     getTransaction,
-    updateTransaction
+    updateTransaction,
+    getTransactionByUser
 }
