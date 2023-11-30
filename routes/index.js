@@ -10,6 +10,7 @@ router.get('/users/:pk_user', users.getUser)
     .post('/users/', users.createUser)
     .post('/transaction/', transaction.createTransaction)
     .put('/users/update/:pk_user', users.updateUser)
+    .put('/transaction/:pk_transaction', transaction.updateTransaction)
     .delete('/users/delete/:pk_user', users.deleteUser)
   
 

@@ -26,7 +26,26 @@ const getTransaction = (pk_transaction) => {
     let transaction = postgresql.public.one(`select pk_transaction, fk_user, description, amount from transaction where pk_transaction = '${pk_transaction}'`);
     return transaction
 }
+
+/**
+ * Update a Transaction
+ * @param {number} pk_transaction Transaction id
+ *  * @param {number} fk_user Transaction id_user
+ * @param {string} description Transaction description
+ * @param {number} amount Transaction amount
+ * @returns {{1, 123, 'sinpe', 25.5}}
+ */
+const updateTransaction = (pk_transaction, fk_user, description, amount) => {
+    try {
+        const user = postgresql.public.none(`update transaction set description='${description}', fk_user='${fk_user}', amount='${amount}' where pk_transaction= '${pk_transaction}'; `);
+        return {pk_transaction, fk_user, description, amount};
+
+    } catch (e) {
+        throw new Error(e);
+    }
+}
 module.exports = {
     createTransaction,
-    getTransaction
+    getTransaction,
+    updateTransaction
 }
