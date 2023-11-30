@@ -8,7 +8,7 @@ postgresql.public.none(`create table users(pk_user integer, name text, status bo
 
 // create table transaction
 postgresql.public.none(`create table transaction(pk_transaction integer, fk_user integer, description text, amount float);
-                insert into transaction values (1, 123, 'sinpe', 25,255);`);
+                insert into transaction values (1, 123, 'sinpe', 25.5);`);
 
 module.exports = {
     postgresql
