@@ -38,7 +38,7 @@ const updateUser = (pk_user, name, status) => {
  * @returns {{pk_user: 1, name: "Juan"}} User schema
  */
 const getUser = (pk_user) => {
-    let user = postgresql.public.one(`select * from users where pk_user = '${pk_user}'`);
+    let user = postgresql.public.one(`select pk_user, name, status from users where pk_user = '${pk_user}' and status=true`);
     return user
 }
 
@@ -48,12 +48,18 @@ const getUser = (pk_user) => {
  * @returns {pk_user: 1} User primary key
  */
 const deleteUser = (pk_user) => {
+    try {
+        const user = postgresql.public.none(`update users set status=false where pk_user= '${pk_user}'; `);
+        return user;
 
-    throw new Error('Method not implemented.');
+    } catch (e) {
+        throw new Error(e);
+    }
 }
 
 module.exports = {
     createUser,
     getUser,
     updateUser,
+    deleteUser
 }
