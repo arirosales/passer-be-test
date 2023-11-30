@@ -1,39 +1,43 @@
 const { postgresql } = require('../databases/postgresql')
 
 /**
- * Get an specific user
+ * Create a user
  * @param {number} pk_user User primary key
  * @param {string} name User name
- * @returns {{pk_user: 1, name: "Juan"}}
+ * @param {boolean} status User status
+ * @returns {{pk_user: 1, name: "Juan", status:true}}
  */
-const createUser = (pk_user, name) => {
+const createUser = (pk_user, name, status) => {
     try {
-        let user = postgresql.public.one(`insert into users values ('${pk_user}', '${name}', status) returning *;`);
-        return user
+        const user = postgresql.public.none(`insert into users (pk_user, name, status) values ('${pk_user}','${name}','${status}');`);
+        return user;
+    } catch (e) {
+        throw new Error(e);
     }
-    catch (e) {
-        throw new Error(e)
-    }
-}
+};
 
 /**
- * Update an specific user
+ * Update a user
  * @param {number} pk_user User primary key
  * @param {string} name User name
- * @returns {{pk_user: 1, name: "Juan"}}
+ * @param {boolean} status User status
+ * @returns {{pk_user: 1, name: "Juan", status:true}}
  */
-const updateUser = (pk_user, name) => {
+const updateUser = (pk_user, name, status) => {
+    try {
+        const user = postgresql.public.none(`update users set name='${name}', status='${status}' where pk_user= '${pk_user}'; `);
+        return user;
 
-    throw new Error('Method not implemented.');
+    } catch (e) {
+        throw new Error(e);
+    }
 }
-
 /**
  * Get an specific user
  * @param {number} pk_user User primary key
  * @returns {{pk_user: 1, name: "Juan"}} User schema
  */
 const getUser = (pk_user) => {
-
     let user = postgresql.public.one(`select * from users where pk_user = '${pk_user}'`);
     return user
 }
@@ -50,5 +54,6 @@ const deleteUser = (pk_user) => {
 
 module.exports = {
     createUser,
-    getUser
+    getUser,
+    updateUser,
 }

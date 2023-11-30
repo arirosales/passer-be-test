@@ -13,9 +13,22 @@ const getUser = async (req, res, next) => {
 }
 
 const createUser = async (req, res, next) => {
-    const { pk_user, name } = req.body
+    const { pk_user, name, status } = req.body
     try {
-        let user = users.createUser(pk_user, name)
+        let user = users.createUser(pk_user, name, status)
+        res.status(200).send(user)
+        next()
+    } catch (e) {
+        console.log(e.message)
+        res.sendStatus(500) && next(e)
+    }
+}
+
+const updateUser = async (req, res, next) => {
+    const { pk_user } = req.params
+    const { name, status } = req.body
+    try {
+        let user = await users.updateUser(pk_user, name, status)
         res.status(200).send(user)
         next()
     } catch (e) {
@@ -26,5 +39,6 @@ const createUser = async (req, res, next) => {
 
 module.exports = {
     getUser,
-    createUser
+    createUser,
+    updateUser
 }
