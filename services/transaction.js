@@ -6,7 +6,7 @@ const transactionModel = require('../models/transaction')
  * @param {number} pk_transaction Transaction id
  *  * @param {number} fk_user Transaction id_user
  * @param {string} description Transaction description
- * @param {number} amount Transaction amount
+ * @param {float} amount Transaction amount
  * @returns {{1, 123, 'sinpe', 25.5}}
  */
 const createTransaction = async ( pk_transaction, fk_user, description, amount) => {
@@ -17,7 +17,22 @@ const createTransaction = async ( pk_transaction, fk_user, description, amount) 
     }
 }
 
-
+/**
+ * get a especific user Transaction
+ * @param {number} pk_transaction Transaction id
+ *  * @param {number} fk_user Transaction id_user
+ * @param {string} description Transaction description
+ * @param {float} amount Transaction amount
+ * @returns {{1, 123, 'sinpe', 25.5}}
+ */
+const getTransaction = async (pk_transaction) => {
+    try {
+        return await transactionModel.getTransaction(pk_transaction)
+    } catch (e) {
+        throw new Error(e.message)
+    }
+}
 module.exports = {
-    createTransaction
+    createTransaction,
+    getTransaction
 }
