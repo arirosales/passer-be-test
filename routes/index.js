@@ -6,7 +6,7 @@ const router = express.Router()
 
 
 router.get('/users/:pk_user', users.getUser)
-    .get('/users/', users.getDeletedUsers)
+    .get('/deletedUsers/', users.getDeletedUsers)
     .get('/transaction/:pk_transaction', transaction.getTransaction)
     .get('/transaction/byUser/:pk_user/:page', transaction.getTransactionByUser)
     .post('/users/', users.createUser)
